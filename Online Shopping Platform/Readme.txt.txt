@@ -1,0 +1,1 @@
+Start the program at bin/Customer_interface/main.class
