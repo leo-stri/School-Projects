@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    portfolio
+{% endblock %}
+
+{% block main %}
+    <h1 class='mb-5'>portfolio</h1>
+
+    <label class='h4' for="stocks">Stocks Owned: </label>
+    {% if stocks %}
+    <table id="stocks" class='table mb-5'>
+        <thead>
+            <th>Stock</th>
+            <th>Shares</th>
+            <th>Current Price</th>
+            <th>Total Value</th>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{ stock["symbol"] }}</td>
+                <td>{{ stock["shares"] }}</td>
+                <td>{{ stock["price"] | usd }}</td>
+                <td>{{ stock["total"] | usd }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <br><span class='h3 text-warning mb-5'>You haven't bought any stocks yet!</span><br>
+    {% endif %}
+
+    <label class='h4 mt-5' for="userinfo">User Information: </label>
+    <table id='userinfo' class='table'>
+        <thead>
+            <th>User</th>
+            <th>Cash Balance</th>
+            <th>Stock Value</th>
+            <th>Grand Value</th>
+        </thead>
+        <tbody>
+            <td>{{ user["username"] }}</td>
+            <td>{{ user["cash"] | usd }}</td>
+            <td>{{ user["stockTotal"] | usd }}</td>
+            <td>{{ user["grandValue"] | usd }}</td>
+        </tbody>
+        <tfoot>
+            <td style="border: 0;"></td>
+            <td style="border: 0;">
+                <button type="button" class='btn btn-primary' data-bs-toggle='collapse' data-bs-target="#add">Add Cash</button>
+                <form class='collapse' id='add' action="/add" method="POST">
+                    <input style='width: 300px;' type='text' name='amount' autofocus autocomplete='off' placeholder='Amount to add into your purse'>
+                    <button class='btn btn-primary' type='submit'>add</button
+                </form>
+            </td>
+
+        </tfoot>
+    </table>
+
+{% endblock %}

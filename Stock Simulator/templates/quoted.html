@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    {% if info %}
+        <table class='table'>
+            <tr>
+                <th>Company Name</th>
+                <th>Latest Price</th>
+                <th>Symbol</th>
+            </tr>
+            <tr>
+                <td>{{ info['name'] }}</td>
+                <td>{{ info['price'] | usd }}</td>
+                <td>{{ info['symbol'] }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p class='h1 text-warning'>The company doesn't exist</p>
+    {% endif %}
+{% endblock %}

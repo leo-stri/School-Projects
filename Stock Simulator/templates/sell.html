@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    sell
+{% endblock %}
+
+{% block main %}
+    <div class='text-start'>
+        <form action="/sell" method="POST">
+            <label for='symbol' class='form-label'>Symbol: </label>
+            <select name='symbol' class='form-select mb-4'>
+                <option selected disabled>Choose the stock you want to sell: </option>
+                {% for symbol in symbols %}
+                <option value='{{ symbol["stock"] }}'>{{ symbol["stock"] }}({{ symbol["shares"] }})</option>
+                {% endfor %}
+            </select>
+            <label class='form-label' for='shares'>Shares: </label>
+            <input class='form-control mb-4' name='shares' id='shares' type='text' autocomplete="off" placeholder="Enter the number of shares to sell">
+            <button class='btn btn-primary' type='submit'>sell</button>
+        </form>
+    </div>
+{% endblock %}

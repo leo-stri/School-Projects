@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div style='background-color: #E7E9EB' class='container text-start p-4' id='register'>
+        <form action='/register' method='POST'>
+            <label class='form-label' for='username' style='text-align: left'>Username: </label>
+            <input class='form-control mb-3' type='text' id='username' name='username' autofocus autocomplete='off' placeholder='Enter username'>
+            <label class='form-label' for='password'>Password: </label>
+            <input class='form-control mb-3' type='password' id='password' name='password' autocomplete='off' placeholder='Enter password'>
+            <label class='form-label' for='confirmation'>Confirm password: </label>
+            <input class='form-control mb-3' type='password' id='confirmation' name='confirmation' autocomplete='off' placeholder='Confirm your password'>
+            <button class="btn btn-primary" type='submit'>register</button>
+        </form>
+    </div>
+{% endblock %}

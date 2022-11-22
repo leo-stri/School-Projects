@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <div class='text-start'>
+        <form action="/quote" method="POST">
+            <label class='form-label mb-4' for='symbol'>Symbol: </label>
+            <input class='form-control mb-4' name='symbol' id='symbol' type='text' autofocus autocomplete='off' placeholder='Enter stock symbol'>
+            <button class='btn btn-primary' type='submit'>loop up</button>
+        </form>
+    </div>
+{% endblock %}
