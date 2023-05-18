@@ -4,5 +4,5 @@ A stock simulator website application that allows users to simulate buying, sell
 
 Use command: flask run, to host a local server of the website.
 
-Credit:
+## Credit:
 I'm credited for most parts of app.py and some parts in the website template. The others are distributed code for educating purpose, credited to 'cs50.harvard.edu'.
