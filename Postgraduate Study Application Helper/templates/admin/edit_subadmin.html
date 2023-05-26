@@ -1,0 +1,71 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+Edit subadmin
+{% endblock %}
+
+{% block main %}
+
+<style>
+	.t {
+		margin-top: 20px;
+		text-align: center;
+	}
+	fieldset {
+		margin: 0 auto;
+		padding: 20px;
+		width: 50%;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0px 0px 5px #ccc;
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	label {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	input[type="text"],
+	input[type="password"] {
+		padding: 10px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+	}
+	input[type="submit"] {
+		background-color: #4CAF50;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+		padding: 10px 20px;
+		border-radius: 5px;
+	}
+	input[type="submit"]:hover {
+		background-color: #3e8e41;
+	}
+</style>
+
+<h2 class="t">Change sub-admin account information:</h2>
+<fieldset>
+	<form action="" method="post" name="Change_Sub-Admin_Account_Form">
+		<label>original username:</label>
+		<p>{{ username }}</p>
+		<label>original password:</label>
+		<p>{{ password }}</p>
+		<label class="t" for="New_Sub-AdminName">New Username:</label>	
+		<input type="text" id="New_Sub-AdminName" name="new_username" required>
+		{% if error1 %}
+		<div class="error-message" style="color: red;">
+			{{ error1 }}
+		</div>
+		{% endif %}
+		<label class="t" for="New_Sub-AdminPassword">New Password:</label>
+		<input type="password" id="New_Sub-AdminPassword" name ="new_password" required><br><br>
+		<input type="submit" value="Submit"">
+	</form>
+</fieldset>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    PSAH admin
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Welcome, {{ name }}!</h1>
+    </div>
+
+    <style>
+        .container {
+        
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 10px;
+          margin-top: 150px;
+        }
+    
+        p {
+          margin-bottom: 20px;
+        }
+    
+        h1, h2 {
+          margin-top: 0;
+          font-weight: bold;
+          text-align: center;
+          color: #333;
+        }
+    
+        h1 {
+          font-size: 36px;
+        }
+    
+        h2 {
+          font-size: 24px;
+        }
+    
+        ul {
+          margin: 40px 0 0 0;
+          list-style: none;
+          padding: 0;
+        }
+    
+        li {
+          margin-bottom: 10px;
+          padding-left: 20px;
+          position: relative;
+          font-size: 18px;
+        }
+    
+        li:before {
+          content: attr(data-title) " ";
+          font-size: 20px;
+          font-weight: bold;
+          color: #666;
+        }
+    
+        li span {
+          font-weight: normal;
+          color: #333;
+        }
+    
+        li::after {
+          content: "\2022";
+          font-size: 20px;
+          color: #0080ff;
+          position: absolute;
+          left: 0;
+          top: 4px;
+        }
+    
+        a {
+          color: #0080ff;
+          text-decoration: none;
+        }
+    
+        a:hover {
+          text-decoration: underline;
+        }
+    </style>
+
+{% endblock %}

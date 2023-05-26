@@ -1,0 +1,113 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+Manage subadmin
+{% endblock %}
+
+{% block main %}
+
+<style>
+	.blue-fancy-but {
+		margin: 20px;
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		background-color: #007bff;
+		color: #fff;
+		text-decoration: none;
+		border: none;
+		border-radius: 0.25rem;
+		cursor: pointer;
+		text-decoration: none;
+	}
+	.blue-fancy-but:hover {
+		color: #fff;
+	}
+
+	.admin-but{
+		display: inline-block;
+		padding: 0.2rem 0.7rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #212529;
+		text-align: center;
+		text-decoration: none;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: #e9e9e9;
+		border: 1px solid #000000;
+		white-space: nowrap;
+	}
+
+	.admin-but:hover{
+		background-color: #dddddd;
+		color: #212529;
+	}
+
+	.p-block {
+		text-align: center;
+	}
+	h1 {
+		font-size: 36px;
+		font-weight: bold;
+		color: #444;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		text-align: center;
+	}
+	h2 {
+		font-size: 28px;
+		font-weight: bold;
+		color: #444;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		text-align: center;
+	}
+	table {
+		width: 60%;
+		margin: 0 auto;
+		border-collapse: collapse;
+		box-shadow: 0px 0px 5px #ccc;
+		background-color: #fff;
+		border-radius: 5px;
+	}
+	th, td {
+		padding: 10px;
+		border: 1px solid #ccc;
+	}
+	th {
+		background-color: #f2f2f2;
+		font-weight: bold;
+		font-size: 18px;
+		color: #444;
+	}
+
+</style>
+
+<div class="p-block">
+<h2>Manage subadmin</h2>
+<table border="1">
+	<tr>
+		<th align="center" colspan="4">Sub-Admin List :</th>
+	</tr>
+	<tr>
+		<th>username</th>
+		<th colspan="2">option</th>
+	</tr>
+	{% for line in lines %}
+	<tr>
+		<td>{{ line[1] }}</td>
+		<td><a class="admin-but" href="/admin/subadmin/edit/{{ line[0] }}">Edit</a></td>
+		
+		<td>
+			<form action="/admin/subadmin/delete" method="post">
+				<input type="hidden" name="id" value="{{ line[0] }}"}>
+				<button class="admin-but" type="submit">Delete</button>
+			</form>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+<a class="blue-fancy-but" href="/admin/subadmin/create">Create new account</a>
+</div>
+{% endblock %}

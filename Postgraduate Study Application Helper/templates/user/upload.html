@@ -1,0 +1,320 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    upload
+{% endblock %}
+
+{% block main %}
+
+<style>
+  {% if session.get("type") not in ["Mainadmin", "Subadmin"] %}
+  body {
+  background-image: url('{{ url_for('static', filename='photo1.png') }}');
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+  }
+  {% endif %}
+  
+  .data{
+          border-collapse: collapse;
+          width: 100%;
+          margin-bottom: 20px auto;
+          margin: 20px auto ;
+          max-width: 5px;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          vertical-align:middle;
+        }
+  
+  th {
+  background-color: #4CAF50;
+  color: white;
+        }
+  
+  tr:nth-child(even) {
+  background-color: #f2f2f2;
+        }
+  
+  
+  tr:nth-child(odd) {
+  background-color: #fff;
+  
+        }
+  
+  td:nth-child(odd) {
+  background-color: #4CAF50;
+  color: white;
+      display: table-cell;
+      vertical-align: inherit;
+      font-weight: bold;
+      text-align: -internal-center;
+        }
+  
+  h2{
+          width: 95%;
+          max-width: 1000px;
+          margin: 20px auto;
+          border-bottom: 6px solid #4CAF50
+  }
+  
+  form {
+   
+    padding: 20px;
+    margin: 0 auto;
+    width: 80%;
+  
+  }
+  
+  table {
+          border-collapse: collapse;
+          width: 100%;
+          max-width: 800px;
+          margin: 20px auto;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+  
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"], select, input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  input[type="checkbox"] {
+    margin-top: 5px;
+  }
+  
+  table tr:nth-child(even) td:nth-child(odd) {
+    background-color: #80c883;
+  }
+  
+  .up-but, input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  border-radius: 8px;
+  }
+  
+  button:hover, input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+</style>
+
+<style>
+  .dropdown-menu {
+    max-height: 200px;
+    max-width: 500px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    margin-top: 0.1rem;
+  }
+
+  .form-control {
+    max-width: 500px;
+  }
+</style>
+
+          <form action="/upload" method="post">
+            
+            <table>
+              <h2 align=left>Application Information</h2>
+              <tr>
+              <div class="form-group">
+                <td>
+                <label for="search">School:</label>
+                </td>
+                <td>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="search" name="school" required>
+                  <div class="dropdown-menu" id="school-dropdown">
+                    <a class="dropdown-item" href="#" data-id="" data-name="">No results found</a>
+                  </div>
+                </div>
+                  {% if error1 %}
+                  <div class="error-message" style="color: red;">
+                    {{ error1 }}
+                  </div>
+                  {% endif %}
+                </div>
+                </td> 
+              </tr>
+              
+              <tr>
+                <td>
+                <label for="subject">Applied Subject:</label>
+                </td>
+                <td>
+                <select id="subject" name="subject">
+                  <option value="">--Select--</option>
+                  {% for subject in subjects %}
+                  <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+                  {% endfor %}
+                </select>
+                {% if error2 %}
+                <div class="error-message" style="color: red;">
+                  {{ error2 }}
+                </div>
+                {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <td><label for="result">Result:</label></td>
+                <td>
+                  <select id="result" name="result">
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="year">Year:</label></td>
+                <td><input type="number" id="year" name="year" value="2022" min="0" max="2023"></td>
+              </tr>
+            </table>
+      
+            <table>
+              <tr>
+                <td><label for="gpa">GPA:</label></td>
+                <td><input type="number" id="gpa" name="gpa" step="0.01" min="0" max="4" required></td>
+              </tr>
+              <tr>
+                <td>
+              <label for="current_subject">Current Subject:</label>
+                </td>
+                <td>
+              <select id="current_subject" name="current_subject">
+                <option value="">--Select--</option>
+                {% for subject in subjects %}
+                <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+                {% endfor %}
+              </select>
+              {% if error3 %}
+                <div class="error-message" style="color: red;">
+                  {{ error3 }}
+                </div>
+              {% endif %}
+              </td>
+              </tr>
+              <tr>
+                <td><label for="honors">Is Honor College:</label></td>
+                <td><input type="checkbox" id="honors" name="honors" value="honors"></td>
+              </tr>
+              <tr>
+                <td><label for="gmat">GMAT: (optional)</label></td>
+                <td><input type="number" id="gmat" name="gmat" min="0" max="800"></td>
+              </tr>
+              <tr>
+                <td><label for="gre">GRE: (optional)</label></td>
+                <td><input type="number" id="gre" name="gre" min="0" max="340"></td>
+              </tr>
+              <tr>
+                <td><label for="tofel">TOFEL: (optional)</label></td>
+                <td><input type="number" id="tofel" name="tofel" min="0" max="120"></td>
+              </tr>
+              <tr>
+                <td><label for="ielts">IELTS: (optional)</label></td>
+                <td><input type="number" id="ielts" name="ielts" min="0" max="9"></td>
+              </tr>
+              <tr>
+                <td><label for="exempted">Exampted from English test:</label></td>
+                <td><input type="checkbox" id="exempted" name="exempted" value="exempted"></td>
+              </tr>
+              <tr>
+                <td><label for="internship">Has intership experience:</label></td>
+                <td><input type="checkbox" id="internship" name="internship" value="internship"></td>
+              </tr>
+            </table>
+      
+            <div align="center">
+              <button class='up-but' type="reset">Reset</button>
+              <input type="submit" value="Upload">
+            </div>
+          </form>
+      
+          <script>
+            $(document).ready(function() {
+            $('#search').on('input', function() {
+              var query = $(this).val();
+              if (query.length >= 3) {
+                // Fetch the filtered data from the server using AJAX
+                $.getJSON('/search_school?search=' + query, function(data) {
+                  // Update the dropdown menu with the filtered data
+                  var dropdown = $('#school-dropdown').empty();
+                  if (data.length > 0) {
+                    $.each(data, function(i, item) {
+                      dropdown.append($('<a>', {
+                        class: 'dropdown-item',
+                        href: '#',
+                        'data-id': item.id,
+                        'data-name': item.name,
+                        text: item.name
+                      }));
+                    });
+                  } else {
+                    dropdown.append($('<a>', {
+                      class: 'dropdown-item',
+                      href: '#',
+                      'data-id': '',
+                      'data-name': '',
+                      text: 'No results found'
+                    }));
+                  }
+                });
+                $('#school-dropdown').show();
+              } else {
+                $('#school-dropdown').hide();
+              }
+            });
+            $('#school-dropdown').on('click', '.dropdown-item', function() {
+              var id = $(this).data('id');
+              var name = $(this).data('name');
+              $('#search').val(name);
+              $('#school-id').val(id);
+              $('#school-dropdown').hide();
+              return false;
+            });
+          });
+
+          $(document).on('click', function(event) {
+          // If the click event target is not inside the dropdown or the input field, hide the dropdown
+          if (!$(event.target).closest('.dropdown').length && !$(event.target).is('#search')) {
+            $('.dropdown-menu').hide();
+          }})
+      
+          </script>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+<style>
+    * {
+		padding: 0;
+		margin: 0;
+	}
+	
+	.nav {
+		display: flex;
+		height: 60px;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20px;
+		box-sizing: border-box;
+		background-color: rgb(101, 178, 236);
+	}
+	.nav p {
+		color: #FFF;
+		font-weight: bold;
+		letter-spacing: 1px;
+	}
+	.nav .buts .login {
+		width: 80px;
+		height: 35px;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		letter-spacing: 0.5px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+	.login:hover {
+		background-color: rgb(28, 143, 255);
+		color: #FFF;
+	}
+    .banner {
+		display: flex;
+		width: 1200px;
+		margin: auto;
+		margin-top: 20px;
+		justify-content: space-between;
+		align-items: center;
+		height: 60px;
+	}
+
+	.banner .left {
+		display: flex;
+	}
+	.banner .left p {
+		margin: 0 10px;
+	}
+	.banner .left p a {
+		text-decoration: none;
+		color: #424242;
+	}
+	.banner .left p a:hover {
+		color: rgb(101, 178, 236);
+	}
+
+    /* Hide the dropdown content */
+    .dropdown-content {
+        display: none;
+    }
+
+    /* Show the dropdown content when hovering over the button */
+    .dropdown:hover .dropdown-content {
+        display: block;
+        
+    }
+
+    .dropdown-content {
+        position: absolute;
+        background-color: #FFF;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        right: 20px;
+    }
+
+    .dropdown-content p {
+        line-height: 35px;
+        text-align: left;
+    }
+
+    .dropdown-content p a {
+        text-decoration: none;
+        color: #424242;
+        font-size: 14px;
+    }
+    .info {
+        border-bottom: 1px solid #424242;
+    }
+    .dropdown-content .info p{
+        color: #424242;
+        font-size: 14px;
+        line-height: 25px;
+    }
+    .dropdown-content .info .number {
+        font-size: 12px;
+        
+    }
+
+    .dropdown-content>p {
+        border-bottom: 1px solid #424242;
+        padding-left: 10px;
+        box-sizing: border-box;
+    }
+
+</style>
+
+<div class="nav">
+    <div class="logo">
+        <p>Postgraduate Study Application Helper</p>
+    </div>
+    <div class="buts">
+        <div class="dropdown">
+            <button class="dropbtn login">Username</button>
+            <div class="dropdown-content">
+                <div class="info">
+                    <p>Username</p>
+                    <p class="number">Student Number</p>
+                </div>
+                <p><a href="#">My favourite</a></p>
+                <p><a href="#">My comment</a></p>
+                <p><a href="#">Log out</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="banner">
+    <div class="left">
+        <p>
+            <a href="./homepage.html">Home</a>
+        </p>
+        <p>
+            <a href="javascript:void(0);">University</a>
+        </p>
+        <!-- <p>
+            <a href="javascript:void(0);">Learning Centers</a>
+        </p> -->
+        <p>
+            <a href="javascript:void(0);">Upload</a>
+        </p>
+        <p>
+            <a href="javascript:void(0);">Contact us</a>
+        </p>
+    </div>
+    <div class="rig">
+        <!-- <input placeholder="Search" class="search" type="text" id="keys">
+        <button class="submit">Search</button> -->
+    </div>
+</div>
+
+

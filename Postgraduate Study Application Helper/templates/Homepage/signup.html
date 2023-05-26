@@ -1,0 +1,239 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    sign up
+{% endblock %}
+
+{% block main %}
+<style>
+	.dialog-login {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		min-height: 100vh;
+		/* background-color: rgba(80, 80, 80, 0.8); */
+	}
+	.login-box,
+	.sign_box {
+		position: relative;
+		width: 600px;
+		margin: auto;
+		margin-top: 5%;
+		padding: 25px 40px;
+		box-sizing: border-box;
+		border-radius: 20px;
+		background-color: #FFF;
+		/* box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%); */
+	}
+	.dialog-box {
+		display: block;
+	}
+	.login-box {
+		display: none;
+	}
+	.sign_box {
+		/* display: none; */
+		/*overflow-y: auto;*/
+		/*max-height: 650px;*/
+		margin-top: 5%;
+	}
+	.dialog-box {
+		/*position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		min-height: 100vh;*/
+	}
+	.dialog-box h4 {
+		width: 100%;
+		text-align: center;
+		line-height: 50px;
+		font-weight: bold;
+		font-size: 18px;
+		margin-bottom: 30px;
+	}
+	.dialog-box span {
+		display: inline-block;
+		width: 100px;
+		text-align: right;
+		margin-right: 20px;
+	}
+	.sign_box span {
+		width: 150px;
+	}
+	
+	.dialog-box .from-item {
+		height: 40px;
+		margin-bottom: 30px;
+	}
+	.dialog-box .from-item input,
+	.dialog-box .from-item select {
+		width: 350px;
+		height: 100%;
+		border-radius: 10px;
+		padding-left: 10px;
+		box-sizing: border-box;
+		border: 1px solid #424242;
+		outline: none;
+	}
+	.dialog-box .sign_box input,
+	.dialog-box .sign_box select {
+		width: 300px;
+	}
+	.but-log {
+		margin-top: 20px;
+	}
+	.but-log button {
+		width: 130px;
+		height: 35px;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		border-radius: 10px;
+		font-weight: bold;
+	}
+	.sub-item {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 30px;
+		padding: 20px 30px;
+		box-sizing: border-box;
+		width: 100%;
+	}
+	.sub-item button,
+	.sign_p,
+	.sub-item .ConfirmSave {
+		width: 120px !important;
+		height: 40px;
+		border: none;
+		text-align: center;
+		outline: none;
+		border-radius: 10px;
+		font-weight: 600;
+		cursor: pointer;
+		
+	}
+	.sign_p {
+		background-color: rgb(240, 240, 240);
+		text-align: center;
+		line-height: 40px;
+		font-weight: 500;
+		font-size: 14px;
+		margin: 0;
+	}
+	.sub-item .loginButSave,
+	.sub-item .ConfirmSave,
+	.sub-item input {
+		background-color: rgb(101, 178, 236);
+		color: #FFF;
+	}
+	
+	.Company {
+		display: none;
+	}
+
+	.tips {
+		position: absolute;
+		width: 350px;
+		height: 150px;
+		text-align: center;
+		top: 10%;
+		border-radius: 10px;
+		left: 50%;
+		margin-left: -175px;
+		background-color: #FFF;
+		display: none;
+		box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+	}
+
+	.tips p {
+		font-size: 18px;
+		font-weight: 500;
+		margin-top: 50px;
+		
+	}
+
+	.tips button {
+		background-color: rgb(101, 178, 236);
+		color: #FFF;
+		width: 120px;
+		height: 40px;
+		border: none;
+		outline: none;
+		border-radius: 10px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+</style>
+
+<div class="dialog-box">
+    <div class="sign_box">
+        <h4>Create an account</h4>
+        <form action=/signup method="POST">
+            <!-- <div class="from-item">
+                <span>Type:</span>
+                <select name="type" onchange="typeChange()" id="typeValue">
+                    <option value="UM students">UM students</option>
+                    <option value="Advertisers">Advertisers</option>
+                </select>
+            </div> -->
+            <div class="from-item Number" id="Number">
+                <span>Student Number:</span>
+                <input type="text" name="Number" required>
+            </div>
+			{% if error3 %}
+			<span class="error-message" style="color: red;">
+				{{ error3 }}
+			</span>
+			{% endif %}
+            <!-- <div class="from-item Company" id="Company">
+                <span>Company:</span>
+                <input type="text" name="company">
+            </div> -->
+            <!-- <div class="from-item">
+                <span>E-mail:</span>
+                <input type="text" name="email">
+            </div> -->
+            <div class="from-item">
+                <span>Username:</span>
+                <input type="text" name="username" required>
+				
+            </div>
+			{% if error1 %}
+				<span class="error-message" style="color: red;">
+					{{ error1 }}
+				</span>
+			{% endif %}
+            <div class="from-item">
+                <span>Password:</span>
+                <input type="password" name="password" required>
+            </div>
+            <div class="from-item">
+                <span>Confirm Password:</span>
+                <input type="password" name="confirm_password" required>
+				<span class="error-message" style="color: red;">		
+				</span>
+            </div>
+			{% if error2 %}
+			<span class="error-message" style="color: red;">
+				{{ error2 }}
+			</span>
+			{% endif %}
+
+            <div class="sub-item">
+                <input type="submit" class="ConfirmSave" value="Confirm" />
+            </div>
+        </form>
+    </div>
+
+	<!-- 弹框 -->
+	<div class="tips">
+		<p>Create an account Successfully！</p>
+		<button>Ok</button>
+	</div>
+</div>
+
+{% endblock %}

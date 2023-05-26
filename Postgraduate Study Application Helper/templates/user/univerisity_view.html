@@ -1,0 +1,427 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    {{ school_name }} records
+{% endblock %}
+
+{% block main %}
+
+<!-- style for background image -->
+<style>
+body {
+background-image: url('{{ url_for('static', filename='photo1.png') }}');
+background-color: rgba(255,255,255,0.8);
+background-repeat: no-repeat;
+background-size: cover;
+background-blend-mode: lighten;
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+
+
+input[type="radio"] {
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+div h2{
+      width: 95%;
+      max-width: 1600px;
+      margin: 20px auto;
+      border-bottom: 6px solid #4CAF50
+}
+
+    /* Style for the filter section */
+fieldset {
+      background-color: #F5F5F5;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: auto;
+      width: 50%
+
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    fieldset legend {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    td label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    td select, td input[type="text"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    .cus-but, .reset {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-family: Arial, sans-serif;
+    }
+
+    .cus-but:hover{
+      background-color: #409442;
+      color: white;
+    }
+
+    input[type="text"], select, input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    fieldset a {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    fieldset a:hover{
+      background-color: #006c90;
+      color: white;
+    }
+
+    /* Style for the table and pagination section */
+    .year {
+      width: 100%;
+      max-width: 5px;
+    }
+    
+    .data{
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px auto;
+      margin: 20px auto ;
+      max-width: 5px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      vertical-align:middle;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    div {
+      justify-content: center;
+
+    }
+
+    .pagination {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.pagination a {
+display: inline-block;
+padding: 5px 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+text-decoration: none;
+color: #333;
+margin-right: 20px;
+}
+
+.pagination a:hover {
+background-color: #f5f5f5;
+}
+
+.pagination .disabled {
+color: #ccc;
+border-color: #ccc;
+cursor: not-allowed;
+margin-right: 20px;
+}
+
+.pagination .current {
+display: inline-block;
+padding: 5px 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #f5f5f5;
+color: #333;
+margin-right: 20px;
+}
+    
+submit:hover {
+background-color: #3e8e41;
+}
+
+</style>
+<div>
+  <h2>{{ school_name }} Application Records</h2>
+  <div class="row" align="center">
+    <form action="/university/view/{{ id }}" method="get">
+    <!-- Filter part -->
+    <fieldset>
+      <legend>Filter</legend>
+      <table = "major" align="center">
+        <tr>
+          <td>
+            <label for="currentSubject">Current Subject:</label>
+          </td>
+          <td>
+            <select id="currentSubject" name="currentSubject">
+            <option value="">--Select--</option>
+            {% for subject in subjects %}
+            <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+            {% endfor %}
+            </select>
+        </td>
+        <td>
+          <label for="targetSubject">Target Subject:</label>
+          </td>
+          <td>
+          <select id="targetSubject" name="targetSubject">
+          <option value="">--Select--</option>
+          {% for subject in subjects %}
+          <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+          {% endfor %}
+          </select>
+        </td>
+        <td>
+          <label>Is Honor College:</label>
+        </td>
+        <td>
+          yes<input type="radio" name="IsHonorCollege" value="yes" id="honor1">
+          no<input type="radio" name="IsHonorCollege" value="no" id="honor2">
+          both<input type="radio" name="IsHonorCollege" value="both" id="honor3" checked>
+        </td>
+        <td>
+          <label>Has internship:</label>
+        </td>
+        <td>
+          yes<input type="radio" name="HasInternship" value="yes" id="intern1">
+          no<input type="radio" name="HasInternship" value="no" id="intern2">
+          both<input type="radio" name="HasInternship" value="both" id="intern3" checked>
+        </td>
+      </tr>
+      <tr>
+        <td>
+              <label for="yearStart">Year Range:</label>
+          </td>
+          <td>
+              <input type="number" id="yearStart" name="yearStart" maxlength="4">
+            </td>
+            <td>
+              <label for="yearEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="yearEnd" name="yearEnd" maxlength="4">
+            </td>
+            <td>
+              <label for="gpaStart">GPA Range:</label>
+                </td>
+            <td>
+              <input type="number" id="gpaStart" name="gpaStart" step="0.01">
+            </td>
+            <td>
+              <label for="gpaEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="gpaEnd" name="gpaEnd" step="0.01">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="GMATStart">GMAT Range:</label>
+            </td>
+          <td>
+              <input type="number" id="GMATStart" name="GMATStart">
+            </td>
+            <td>
+              <label for="GMATEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="GMATEnd" name="GMATEnd">
+            </td>
+            <td>
+              <label for="GREStart">GRE Range:</label>
+                </td>
+            <td>
+              <input type="number" id="GREStart" name="GREStart">
+            </td>
+            <td>
+              <label for="GREEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="GREEnd" name="GREEnd">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="TOFELStart">TOFEL Range:</label>
+            </td>
+          <td>
+              <input type="number" id="TOFELStart" name="TOFELStart">
+            </td>
+            <td>
+              <label for="TOFELEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="TOFELEnd" name="TOFELEnd">
+            </td>
+            <td>
+              <label for="IELTSStart">IELTS Range:</label>
+                </td>
+            <td>
+              <input type="number" id="IELTSStart" name="IELTSStart">
+            </td>
+            <td>
+              <label for="IELTSEnd">to</label>
+            </td>
+            <td>
+              <input type="number" id="IELTSEnd" name="IELTSEnd">
+            </td>
+          </tr>
+      </table>
+      <input class="cus-but" type="submit" value="Apply">
+      <input class='cus-but' type="reset" value="Reset">
+    </form>
+      <a href="{{ url_for('university_analysis', id=id) }}">Analysis</a>
+      <a href="{{ url_for('university_predict', id=id) }}">Predict</a>
+    </fieldset>
+
+    <!-- Record table and Pagination -->
+    <table class="data">
+      <thead>
+        <tr>
+          <th>GPA</th>
+          <th>Applied Program</th>
+          <th>Current Major</th>
+          <th>Is Honor College</th>
+          <th>GMAT</th>
+          <th>GRE</th>
+          <th>TOFEL</th>
+          <th>IELTS</th>
+          <th>Exempted from English Tests</th>
+          <th>Has internship</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody id="records">
+        {% for row in rows %}
+        <tr>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ "yes" if row[4] == 1 else "no" }}</td>
+          <td>{{ row[5] }}</td>
+          <td>{{ row[6] }}</td>
+          <td>{{ row[7] }}</td>
+          <td>{{ row[8] }}</td>
+          <td>{{ "yes" if row[9] == 1 else "no" }}</td>
+          <td>{{ "yes" if row[10] == 1 else "no" }}</td>
+          <td>{{ row[11] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div id="pagination" class="pagination">
+      {% if page > 1 %}
+          <a href="{{ url_for('university_view', id=id, page=page-1, currentSubject=currentSubject, targetSubject=targetSubject, yearStart=yearStart, yearEnd=yearEnd, gpaStart=gpaStart, gpaEnd=gpaEnd, GMATStart=gmat_start, GMATEnd=gmat_end, GREStart=gre_start, GREEnd=gre_end, TOFELStart=tofel_start, TOFELEnd=tofel_end, IELTSStart=ielts_start, IELTSEnd=ielts_end, IsHonorCollege=is_honor_college, HasInternship=has_internship)}}">« Previous</a>
+      {% else %}
+          <span class="disabled">« Previous</span>
+      {% endif %}
+      <span class="current">{{ page }}</span>
+      {% if len(rows) == 10 %}
+          <a href="{{ url_for('university_view', id=id, page=page+1, currentSubject=currentSubject, targetSubject=targetSubject, yearStart=yearStart, yearEnd=yearEnd, gpaStart=gpaStart, gpaEnd=gpaEnd, GMATStart=gmat_start, GMATEnd=gmat_end, GREStart=gre_start, GREEnd=gre_end, TOFELStart=tofel_start, TOFELEnd=tofel_end, IELTSStart=ielts_start, IELTSEnd=ielts_end, IsHonorCollege=is_honor_college, HasInternship=has_internship)}}">Next »</a>
+      {% else %}
+          <span class="disabled">Next »</span>
+      {% endif %}
+    </div>
+</div>
+</div>
+<script>
+  $(document).on('click', '.pagination a', function(event) {
+  event.preventDefault();
+  var url = $(this).attr('href');
+  $.get(url, function(data) {
+      $('#records').html($(data).find('#records').html());
+      $('#pagination').html($(data).find('#pagination').html());
+  });
+  });
+
+  $(document).ready(function() {
+  var currentIndex = {{ currentIndex }};
+  var targetIndex = {{ targetIndex }};
+  var yearStart = {{ yearStart }};
+  var yearEnd = {{ yearEnd }};
+  var gpaStart = {{ gpaStart }};
+  var gpaEnd = {{ gpaEnd }};
+  var gmatStart = {{ gmat_start }};
+  var gmatEnd = {{ gmat_end }};
+  var greStart = {{ gre_start }};
+  var greEnd = {{ gre_end }};
+  var tofelStart = {{ tofel_start }};
+  var tofelEnd = {{ tofel_end }};
+  var ieltsStart = {{ ielts_start }};
+  var ieltsEnd = {{ ielts_end }};
+  if (currentIndex >= 0) {
+    $('#currentSubject').prop("selectedIndex", currentIndex);
+  }
+  if (targetIndex >= 0) {
+    $('#targetSubject').prop("selectedIndex", targetIndex);
+  }
+  $('#yearStart').val(yearStart);
+  $('#yearEnd').val(yearEnd);
+  $('#gpaStart').val(gpaStart);
+  $('#gpaEnd').val(gpaEnd);
+  $('#GMATStart').val(gmatStart);
+  $('#GMATEnd').val(gmatEnd);
+  $('#GREStart').val(greStart);
+  $('#GREEnd').val(greEnd);
+  $('#TOFELStart').val(tofelStart);
+  $('#TOFELEnd').val(tofelEnd);
+  $('#IELTSStart').val(ieltsStart);
+  $('#IELTSEnd').val(ieltsEnd);
+  $('input[name="IsHonorCollege"][value="{{ is_honor_college }}"]').prop('checked', true);
+  $('input[name="HasInternship"][value="{{ has_internship }}"]').prop('checked', true);
+  });
+</script>
+{% endblock %}

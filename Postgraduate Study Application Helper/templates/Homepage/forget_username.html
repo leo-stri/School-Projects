@@ -1,0 +1,270 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block main %}
+<style>
+	.dialog-login {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 100vh;
+	
+	/* background-color: rgba(80, 80, 80, 0.8); */
+  }
+  .login-box,
+  .sign_box {
+	position: relative;
+	width: 600px;
+	margin: auto;
+	margin-top: 5%;
+	padding: 25px 40px;
+	box-sizing: border-box;
+	border-radius: 20px;
+	background-color: #FFF;
+	/* box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%); */
+  }
+  .dialog-box {
+	display: block;
+  }
+  .sign_box {
+	display: none;
+	overflow-y: auto;
+	max-height: 650px;
+	margin-top: 5%;
+  }
+  .dialog-box {
+	/*position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 100vh;*/
+  }
+  .dialog-box h4 {
+	width: 100%;
+	text-align: center;
+	line-height: 50px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 30px;
+  }
+  .dialog-box span {
+	display: inline-block;
+	width: 150px;
+	text-align: right;
+	margin-right: 20px;
+  }
+  .sign_box span {
+	width: 150px;
+  }
+  
+  .dialog-box .from-item {
+	height: 40px;
+	margin-bottom: 30px;
+  }
+  .dialog-box .from-item input,
+  .dialog-box .from-item select {
+	width: 300px;
+	height: 100%;
+	border-radius: 10px;
+	padding-left: 10px;
+	box-sizing: border-box;
+	border: 1px solid #424242;
+	outline: none;
+  }
+  .dialog-box .sign_box input,
+  .dialog-box .sign_box select {
+	width: 300px;
+  }
+  .but-log {
+	margin-top: 20px;
+  }
+  .but-log button {
+	width: 130px;
+	height: 35px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 10px;
+	font-weight: bold;
+  }
+  .sub-item {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+	padding: 20px 30px;
+	box-sizing: border-box;
+	width: 100%;
+  }
+  .sub-item button,
+  .sign_p {
+	width: 120px;
+	height: 40px;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	font-weight: 600;
+	cursor: pointer;
+  }
+  .sub-item input {
+	padding: 7px 20px;
+	box-sizing: border-box;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	outline: none;
+  }
+  .sign_p {
+	background-color: rgb(240, 240, 240);
+	text-align: center;
+	line-height: 40px;
+	font-weight: 500;
+	font-size: 14px;
+  }
+  .sub-item .loginButSave,
+  .sub-item .ConfirmSave {
+	background-color: rgb(101, 178, 236);
+	color: #FFF;
+  }
+  
+  .Company {
+	display: none;
+  }
+  
+  .tips {
+	position: absolute;
+	width: 350px;
+	height: 150px;
+	text-align: center;
+	top: 10%;
+	border-radius: 10px;
+	left: 50%;
+	margin-left: -175px;
+	background-color: #FFF;
+	display: none;
+	box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+  }
+  
+  .tips p {
+	font-size: 18px;
+	font-weight: 500;
+	margin-top: 50px;
+	
+  }
+  
+  .tips button {
+	background-color: rgb(101, 178, 236);
+	color: #FFF;
+	width: 120px;
+	height: 40px;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	font-weight: 600;
+	cursor: pointer;
+  }
+  
+  </style>
+  
+  <div class="dialog-box">
+	<div class="login-box">
+		<h4>Find Username</h4>
+		<form id="lookup-form">
+			<div class="from-item Number" id="Number">
+				<span>Student Number:</span>
+				<input type="text" name="student_id">
+			</div>
+			<!-- <div class="from-item">
+				<span>Email:</span>
+				<input type="text" name="email">
+			</div> -->
+		   
+			<div class="sub-item">
+				<input type='submit' class="loginButSave" value="confirm">
+			</div>
+		</form>
+	</div>
+  </div>
+
+<style>
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 20%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.popup p {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+.close-btn {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #555;
+}
+</style>
+  
+  <div id="popup-container" class="popup">
+  </div>
+  
+  <script>
+  var form = document.getElementById('lookup-form');
+  var popupContainer = document.getElementById('popup-container');
+  
+  form.addEventListener('submit', function(event) {
+	
+	event.preventDefault();
+  
+	var formData = new FormData(form);
+	fetch('/forget', {
+	method: 'POST',
+	body: formData
+	})
+	.then(function(response) {
+	return response.json();
+	})
+	.then(function(data) {
+	var popupHtml = '';
+	if (data.row) {
+	  popupHtml += '<p>Username: ' + data.row[0] + '</p>';
+	} else {
+	  popupHtml += '<p>No user found.</p>';
+	}
+	popupHtml += '<button class="close-btn">Close</button>';
+  
+	popupContainer.innerHTML = popupHtml;
+	var popup = document.querySelector('.popup');
+	popup.style.display = 'block';
+  
+	var closeBtn = document.querySelector('.close-btn');
+	closeBtn.addEventListener('click', function() {
+	  popup.style.display = 'none';
+	});
+	});
+  });
+  popupContainer.style.display = 'none';
+  </script>
+
+{% endblock %}
