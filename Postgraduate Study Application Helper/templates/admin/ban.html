@@ -1,0 +1,146 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+Ban account
+{% endblock %}
+
+{% block main %}
+
+<style>
+	.ban-but {
+		box-sizing: border-box;
+		font-family: Arial, sans-serif;
+		font-size: 15px;
+		line-height: 1.5;
+	}
+
+	.margined {
+		margin: 10px;
+	}
+
+	div {
+        justify-content: center;
+    }
+
+	.search{
+		border-collapse: collapse;
+		width: 80%;
+		margin-bottom: 20px;
+		justify-content: center;
+	}
+
+	.ban {
+		border-collapse: collapse;
+		width: 80%;
+		margin-bottom: 20px;
+		justify-content: center;
+	}
+
+	th, td {
+		border: 1px solid #ccc;
+		padding: 8px;
+		text-align: left;
+	}
+
+	td {
+		width: 20%;
+	}
+
+	th {
+		background-color: #f2f2f2;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 5px;
+	}
+
+	span {
+		margin-right: 10px;
+	}
+
+	.page-number {
+		font-weight: bold;
+	}
+</style>
+
+<div>
+	<p class="margined" align="center" style="font-size:40px;">Ban account</p>
+	<table class="search" align="center">
+		<tr>
+			<td>
+				<form action="/admin/ban" method="get">
+					<input class="margined" placeholder="search user name..." type="text" name="search" {% if name_searched %} value="{{ name_searched }}" {% endif %}>
+					<input class="margined" name="action" value="search name" type="submit">
+				</form>
+			</td>
+			<td>
+				<form action="/admin/ban" method="get">
+					<input class="margined" placeholder="search user id..." type="text" name="search" {% if id_searched %} value="{{ id_searched }}" {% endif %}>
+					<input class="margined" name="action" value="search id" type="submit">
+				</form>
+			</td>
+			<td width="35%">
+				<form action="/admin/ban" method="get"><input class="margined" type="submit" value="reset"></form>
+			</td>
+		</tr>
+	</table>
+	
+
+	<table class="ban" align="center">
+		<thead>
+			<tr>
+				<th>User ID</th>
+				<th>User Name</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for line in lines %}
+			<tr>
+				<td>
+					<p>{{ line[0] }}</p>
+				</td>
+				<td>
+					<p>{{ line[1] }}</p>
+				</td>
+				<td>
+					{% if line[2] == 0 %}
+					<button class="ban-but" onclick="banAction(this)" data-action="Ban" data-id="{{ line[0] }}">Ban</button>
+					{% else %}
+					<button class="ban-but" onclick="banAction(this)" data-action="Unban" data-id="{{ line[0] }}">Unban</button>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<!-- <div class="pages" align="center">
+		<input class = "page" type="button" value="Prev"/>
+		<span class="page-number">Page 1</span>
+		<input class = "page" type="button" value="Next"/>
+	</div> -->
+</div>
+
+<script>
+	function banAction(button) {
+		var html = button.innerHTML;
+		var action = button.getAttribute("data-action")
+		var id = button.getAttribute("data-id")
+
+		if (html == 'Ban') {
+			button.innerHTML = 'Unban';
+			button.setAttribute("data-action", 'Unban');
+		} else {
+			button.innerHTML = 'Ban';
+			button.setAttribute("data-action", 'Ban');
+		}
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/admin/ban");
+  		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.send(JSON.stringify({action: action, id: id}));
+	};
+
+</script>
+{% endblock %}

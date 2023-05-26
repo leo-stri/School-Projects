@@ -1,0 +1,122 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    {{ school_name }}: Analyze
+{% endblock %}
+
+{% block main %}
+
+<style>
+  body {
+  background-image: url('{{ url_for('static', filename='photo1.png') }}');
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+  /* You may add things like width, height, background-size... */
+  }
+      body {
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 50px;
+      }
+      h2 {
+        width: 95%;
+        max-width: 1400px;
+        margin: 20px auto;
+        border-bottom: 6px solid #4CAF50
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 200px;
+      }
+      .return {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #333;
+        margin-left: auto;
+        margin-right: 200px;
+      }
+      .title{
+        width: 95%;
+        max-width: 1400px;
+        margin: 20px auto;
+      }
+      button[type="submit"] {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+      }
+      .my-text {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+      <h2>{{ school_name }} records analysis</h2>
+      <div class="header">
+        <h4 class="title">Select a data to analyze:</h4>
+        <a class='return' href="/university/view/{{ id }}">Return</a>
+      </div>
+     
+      <div style="text-align: center;">
+        <form action="/university/analysis/{{id}}" method="get">
+          <button type="submit" value="GPA" name="action">GPA</button>
+          <button type="submit" value="IsHonorCollege" name="action">Is Honor College</button>
+          <button type="submit" value="GMAT" name="action">GMAT</button>
+          <button type="submit" value="GRE" name="action">GRE</button>
+          <button type="submit" value="TOFEL" name="action">TOFEL</button>
+          <button type="submit" value="IELTS" name="action">IELTS</button>
+          <button type="submit" value="HasInternship" name="action">Has Internship</button>
+        </form>
+      </div>
+      <br>
+      <br>
+
+    {% if action %}
+    <div style="text-align: center;">
+      <img alt="Analyze diagram" src="{{ url_for('analysis_image', id=id, action=action) }}" style="max-width: 800px; max-height: 500px;">
+    </div>
+    {% endif %}
+
+    {% if mean %}
+    <p class="my-text">mean: {{ mean }}</p>
+    {% endif %}
+
+    {% if intern_rate %}
+    <p class="my-text">Has internship rate: {{ intern_rate }}</p>
+    {% endif %}
+
+    {% if honor_college_rate %}
+    <p class="my-text">Honor College rate: {{ honor_college_rate }}</p>
+    {% endif %}
+{% endblock %}

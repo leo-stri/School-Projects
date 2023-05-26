@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <div>
+      <h2>UM Comment Records</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John Doe</td>
+            <td>This is a good university</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jane Smith</td>
+            <td>I think it is too easy to entry!</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <button type="button" onclick="previousPage()">Previous Page</button>
+        <button type="button" onclick="nextPage()">Next Page</button>
+      </div>
+    </div>
+    <div>
+      <h2>Comments</h2>
+      <form>
+        <textarea name="comment" id="comment" rows="5" cols="50"></textarea><br><br>
+        <button type="button" onclick="clearComment()">Clear</button>
+        <button type="button" onclick="submitComment()">Submit</button>
+      </form>
+    </div>
+    <script>
+      function clearComment() {
+        document.getElementById("comment").value = "";
+      }
+
+      function submitComment() {
+        var comment = document.getElementById("comment").value;
+        // code to submit comment to server
+        console.log('Submitting comment: ' + comment);
+      }
+    </script>
+  </body>
+</html>

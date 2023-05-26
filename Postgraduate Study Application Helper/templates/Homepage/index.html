@@ -1,0 +1,100 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+PSAH: welcome!
+{% endblock %}
+
+{% block main %}
+
+<style type="text/css">
+	.search {
+		width: 250px;
+		height: 35px;
+		padding-left: 10px;
+		box-sizing: border-box;
+		border: 1px solid #aaa;
+		border-radius: 10px;
+		outline: none;
+	}
+	body {
+		background-image:url('{{ url_for('static', filename='UM1.jpg') }}');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.rig .submit{
+		width: 80px;
+		height: 35px;
+		border-radius: 10px;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		background-color: rgb(101, 178, 236);
+		color: #FFF;
+		font-weight: bold;
+	}
+
+	.main {
+		position: relative;
+		width: 1200px;
+		margin: auto;
+		margin-top: 20px;
+	}
+
+	.main .picture {
+		width: 100%;
+		border: 1px solid #424242;
+		height: 250px;
+	}
+
+	.text {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 40px;
+	}
+
+	.textItem p {
+	font-size: 24px;
+	text-align: center;
+	margin: 0 auto;
+	}
+
+
+	.textItem textarea {
+		width: 100%;
+		height: 200px;
+		font-size: 30px;
+		text-align: center;
+		color: #F44336;
+		background-color: transparent;
+		border: none;
+		resize: none;
+		margin: 0;
+		padding: 0;
+		outline: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	</style>
+
+	<div class="main">
+		<div class="picture">
+			<img src="{{ url_for('static', filename='UM.jpg') }}" alt="Description of your image" style="width:100%;height:100%;object-fit:cover;">
+		</div>
+
+		<div class="textItem">
+			<div class="textTitle">
+				<h1 style="text-align:center; font-size:48px; font-family: Georgia, serif;">Exploring Opportunities!</h1>
+				<h2 style="text-align:center; font-size:48px; font-family: Georgia, serif;">Ultimate Information for College Applications!</h2>
+			</div>
+			<div class="textContent">
+				<p style="text-align:center; font-size:24px; font-family: Georgia, serif;">We are dedicated to providing comprehensive and efficient resources to assist UM students in achieving their academic and career aspirations</p>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

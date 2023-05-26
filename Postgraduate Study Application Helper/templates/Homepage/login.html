@@ -1,0 +1,214 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block main %}
+  <div class="dialog-box">
+    <div class="login-box">
+        <h4>Log in</h4>
+        <form action=/login method="POST">
+			<div class="from-item">	
+                <span>Account type:</span>
+                <select name="type">
+					<option value="user" {% if user %}selected{% endif %}>user</option>
+					<option value="admin" {% if admin %}selected{% endif %}>admin</option>
+				</select>
+            </div>
+            <div class="from-item">
+                <span>Username:</span>
+                <input type="text" name="username" autocomplete="off" required>
+            </div>
+            <div class="from-item">
+                <span>Password:</span>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="but-log" style="margin-top: 50px;">
+                <a href="/forget">forget username</a>
+            </div>
+
+            <div class="sub-item">
+                <a href="/signup" class="sign_p">Sign up</a>
+                <input type="submit" value="log in">
+            </div>
+			{% if error %}
+			<div class="error-message" style="color: red;">
+			  {{ error }}
+			</div>
+			{% endif %}
+        </form>
+    </div>
+  
+	<style>
+		body {
+          align-content: center;
+          background-image: url('{{ url_for('static', filename='photo1.png') }}');
+          background-color: rgba(255,255,255,0.8);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-blend-mode: lighten;
+          /* You may add things like width, height, background-size... */
+        }
+		.dialog-login {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  min-height: 100vh;
+		  /* background-color: rgba(80, 80, 80, 0.8); */
+		}
+		.login-box,
+		.sign_box {
+		  position: relative;
+		  width: 600px;
+		  margin: auto;
+		  margin-top: 2%;
+		  padding: 25px 40px;
+		  box-sizing: border-box;
+		  border-radius: 20px;
+		  background-color: #FFF;
+		  /* box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%); */
+		}
+		/*login-box {
+		  margin-top: 20px;
+		}*/
+		.dialog-box {
+		  display: block;
+		}
+		.sign_box {
+		  display: none;
+		  overflow-y: auto;
+		  max-height: 650px;
+		  margin-top: 5%;
+		}
+		.dialog-box h4 {
+		  width: 100%;
+		  text-align: center;
+		  line-height: 50px;
+		  font-weight: bold;
+		  font-size: 18px;
+		  margin-bottom: 30px;
+		}
+		.dialog-box span {
+		  display: inline-block;
+		  width: 100px;
+		  text-align: right;
+		  margin-right: 20px;
+		}
+		.sign_box span {
+		  width: 150px;
+		}
+		
+		.dialog-box .from-item {
+		  height: 40px;
+		  margin-bottom: 30px;
+		}
+		.dialog-box .from-item input,
+		.dialog-box .from-item select {
+		  width: 350px;
+		  height: 100%;
+		  border-radius: 10px;
+		  padding-left: 10px;
+		  box-sizing: border-box;
+		  border: 1px solid #424242;
+		  outline: none;
+		}
+		.dialog-box .sign_box input,
+		.dialog-box .sign_box select {
+		  width: 300px;
+		}
+		.but-log {
+		  margin-top: 20px;
+		}
+		.but-log a {
+		  width: 130px;
+		  height: 35px;
+		  border: none;
+		  outline: none;
+		  cursor: pointer;
+		  border-radius: 10px;
+		  font-weight: 500;
+		  background-color: rgb(240,240,240);
+		  text-decoration: none;
+		  padding: 8px 15px;
+		  box-sizing: border-box;
+		  color: #424242;
+		}
+		.sub-item {
+		  position: relative;
+		  display: flex;
+		  justify-content: space-between;
+		  margin-top: 30px;
+		  padding: 20px 30px;
+		  box-sizing: border-box;
+		  width: 100%;
+		}
+		.sub-item button,
+		.sign_p,
+		.sub-item input {
+		  width: 120px;
+		  height: 40px;
+		  border: none;
+		  outline: none;
+		  border-radius: 10px;
+		  font-weight: 600;
+		  cursor: pointer;
+		}
+		.sign_p {
+		  background-color: rgb(240, 240, 240);
+		  text-align: center;
+		  line-height: 40px;
+		  font-weight: 500;
+		  font-size: 14px;
+		  text-decoration: none;
+		  color: #424242;
+		}
+		.sub-item .loginButSave,
+		.sub-item .ConfirmSave,
+		.sub-item input {
+		  background-color: rgb(101, 178, 236);
+		  color: #FFF;
+		}
+		
+		.Company {
+		  display: none;
+		}
+	  
+		.tips {
+		  position: absolute;
+		  width: 350px;
+		  height: 150px;
+		  text-align: center;
+		  top: 10%;
+		  border-radius: 10px;
+		  left: 50%;
+		  margin-left: -175px;
+		  background-color: #FFF;
+		  display: none;
+		  box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+		}
+	  
+		.tips p {
+		  font-size: 18px;
+		  font-weight: 500;
+		  margin-top: 50px;
+		  
+		}
+	  
+		.tips button {
+		  background-color: rgb(101, 178, 236);
+		  color: #FFF;
+		  width: 120px;
+		  height: 40px;
+		  border: none;
+		  outline: none;
+		  border-radius: 10px;
+		  font-weight: 600;
+		  cursor: pointer;
+		}
+	  
+	  </style>
+
+{% endblock %}

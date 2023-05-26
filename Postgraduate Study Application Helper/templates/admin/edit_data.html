@@ -1,0 +1,475 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    Edit data
+{% endblock %}
+
+{% block main %}
+
+<!-- style for background image -->
+<style>
+
+.buts{
+  text-align: center;
+  margin-top: 20px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+div h2{
+      width: 95%;
+      max-width: 1600px;
+      margin: 20px auto;
+      border-bottom: 6px solid #4CAF50
+}
+
+    /* Style for the filter section */
+fieldset {
+      background-color: #F5F5F5;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: auto;
+      width: 50%
+
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    fieldset legend {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    td label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    td select, td input[type="text"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    .green-but, fieldset button, form input[type="submit"], .reset {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-family: Arial, sans-serif;
+    }
+
+    .green-but:hover{
+        background-color: #459d48;
+    }
+
+    input[type="text"], select, input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    fieldset a {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Style for the table and pagination section */
+    .year {
+      width: 100%;
+      max-width: 5px;
+    }
+    
+    .data_1, .data_@{
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px auto;
+      margin: 20px auto ;
+      max-width: 5px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      vertical-align:middle;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    div {
+      justify-content: center;
+
+    }
+
+    .delete {
+      background-color: #ff0000;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-family: Arial, sans-serif;
+    }
+
+    .delete:hover {
+      background-color: #e50000;
+      color: white;
+    }
+
+    .edit {
+      background-color: #ffae00;
+      border: none;
+      color: white;
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-family: Arial, sans-serif;
+    }
+
+    .edit:hover {
+      background-color: #e39b00;
+      color: white;
+    }
+
+    .pagination {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.pagination a {
+display: inline-block;
+padding: 5px 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+text-decoration: none;
+color: #333;
+margin-right: 20px;
+}
+
+.pagination a:hover {
+background-color: #f5f5f5;
+}
+
+.pagination .disabled {
+color: #ccc;
+border-color: #ccc;
+cursor: not-allowed;
+margin-right: 20px;
+}
+
+.pagination .current {
+display: inline-block;
+padding: 5px 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #f5f5f5;
+color: #333;
+margin-right: 20px;
+}
+    
+submit:hover {
+background-color: #3e8e41;
+}
+
+</style>
+
+<style>
+  .dropdown-menu {
+    max-height: 200px;
+    max-width: 500px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    margin-top: 0.1rem;
+  }
+
+  .form-control {
+    max-width: 500px;
+  }
+</style>
+
+<div>
+  <h2>Edit Data</h2>
+
+
+
+
+    <!-- First Record table and Pagination -->
+<form action="" method="post">
+    <table class="data_1" align="center">
+      <thead>
+        <tr>
+          <th></th>
+          <th>School</th>
+          <th>Result</th>
+          <th>Applied Program</th>
+          <th>Current Major</th> <br></br>
+        </tr>
+      </thead>
+      <tbody id="records">
+        <tr>
+          <td>Original Value</td>
+          <td>{{ info[0] }}</td>
+          <td>{{ "accepted" if info[1] == 1 else "rejected" }}</td>
+          <td>{{ info[2] }}</td>
+          <td>{{ info[3] }}</td>
+        </tr>        
+        <tr>
+            <td>New Value</td>
+            <td>               
+                <div class="input-group">
+                <input type="text" class="form-control" id="school" name="school" required>
+                <div class="dropdown-menu" id="school-dropdown">
+                  <a class="dropdown-item" href="#" data-id="" data-name="">No results found</a>
+                </div>
+              </div>
+                {% if error1 %}
+                <div class="error-message" style="color: red;">
+                  {{ error1 }}
+                </div>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+                <select id="result" name="result">
+                    <option value="1">accepted</option>
+                    <option value="0">rejected</option>
+                </select>
+            </td>
+            <td>
+                <select id="target" name="target" value="{{ info[2] }}">
+                    {% for subject in subjects %}
+                    <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select id="current" name="current" value="{{ info[3] }}">
+                    {% for subject in subjects %}
+                    <option value="{{ subject[0] }}">{{ subject[0] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Second Record table and Pagination -->
+    <table class="data_2" align="center">
+      <thead>
+        <tr>
+          <th></th>
+          <th>GPA</th>
+          <th>GMAT</th>
+          <th>GRE</th>
+          <th>TOFEL</th>
+          <th>IELTS</th>
+          <th>IsHonorCollege</th>
+          <th>Exempted from English Tests</th>
+          <th>Has internship</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody id="records">
+        <tr>
+          <td>Original Value</td>
+          <td>{{ info[4] }}</td>
+          <td>{{ info[5] }}</td>
+          <td>{{ info[6] }}</td>
+          <td>{{ info[7] }}</td>
+          <td>{{ info[8] }}</td>
+          <td>{{ "yes" if info[9] == 1 else "no" }}</td>
+          <td>{{ "yes" if info[10] == 1 else "no" }}</td>
+          <td>{{ "yes" if info[11] == 1 else "no" }}</td>
+          <td>{{ info[12] }}</td>
+        </tr>
+
+
+        <tr>
+            <td>New Value</td>
+            <td>
+                <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="4" required>
+            </td>
+            <td>
+                <input type="number" id="gmat" name="gmat" step="0.01" min="0" max="800">
+            </td>
+            <td>
+                <input type="number" id="gre" name="gre" step="0.01" min="0" max="340">
+            </td>
+            <td>
+                <input type="number" id="tofel" name="tofel" step="0.01" min="0" max="120">
+            </td>
+            <td>
+                <input type="number" id="ielts" name="ielts" step="0.01" min="0" max="9">
+            </td>
+            <td>
+                <input type="checkbox" id="honor" name="honor" value="honors">
+            </td>
+            <td>
+                <input type="checkbox" id="exempted" name="exempted" value="exempted">
+            </td>
+            <td>
+                <input type="checkbox" id="intern" name="intern" value="internship">
+            </td>
+            <td><input type="number" id="year" name="year" value="2022" min="0" max="2023"></td>
+          </tr>
+      </tbody>
+    </table>
+    <div class="buts">
+      <input class="green-but" type="submit" value="submit">
+      <button type="button" class="green-but" onclick="form_default()">reset</button>
+    </div>
+ </form>
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+</div>
+<script>
+
+$(document).ready(function() {
+$('#school').on('input', function() {
+  var query = $(this).val();
+  if (query.length >= 3) {
+    // Fetch the filtered data from the server using AJAX
+    $.getJSON('/search_school?search=' + query, function(data) {
+      // Update the dropdown menu with the filtered data
+      var dropdown = $('#school-dropdown').empty();
+      if (data.length > 0) {
+        $.each(data, function(i, item) {
+          dropdown.append($('<a>', {
+            class: 'dropdown-item',
+            href: '#',
+            'data-id': item.id,
+            'data-name': item.name,
+            text: item.name
+          }));
+        });
+      } else {
+        dropdown.append($('<a>', {
+          class: 'dropdown-item',
+          href: '#',
+          'data-id': '',
+          'data-name': '',
+          text: 'No results found'
+        }));
+      }
+    });
+    $('#school-dropdown').show();
+  } else {
+    $('#school-dropdown').hide();
+  }
+});
+
+$('#school-dropdown').on('click', '.dropdown-item', function() {
+  var id = $(this).data('id');
+  var name = $(this).data('name');
+  $('#school').val(name);
+  $('#school-id').val(id);
+  $('#school-dropdown').hide();
+  return false;
+});
+});
+
+$(document).on('click', function(event) {
+// If the click event target is not inside the dropdown or the input field, hide the dropdown
+if (!$(event.target).closest('.dropdown').length && !$(event.target).is('#school')) {
+$('.dropdown-menu').hide();
+}})
+
+function form_default() {
+  console.log("Reset button clicked");
+  $('#current').val("{{ info[3] }}");
+  $('#target').val("{{ info[2] }}");
+  $('#school').val("{{ info[0] }}");
+  $('#result').val("{{ info[1] }}");
+  $('#gpa').val("{{ info[4] }}");
+  $('#gmat').val("{{ info[5] }}");
+  $('#gre').val("{{ info[6] }}");
+  $('#tofel').val("{{ info[7] }}");
+  $('#ielts').val("{{ info[8] }}");
+  if ({{ info[9] }} == 1) {
+    $('#honor').prop("checked", true);
+  }
+  if ({{ info[10] }} == 1) {
+    $('#exempted').prop("checked", true);
+  }
+  if ({{ info[11] }} == 1) {
+    $('#intern').prop("checked", true);
+  }
+  $('#year').val("{{ info[12] }}");
+}
+
+$(document).ready(form_default);
+</script>
+{% endblock %}

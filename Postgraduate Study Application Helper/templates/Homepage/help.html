@@ -1,0 +1,100 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    PSAH: help
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Welcome to postgraduate study helper!</h1>
+        <ul>
+            <li data-title="Find University: "><span>Click university and search for the your target university</span></li>
+            <li data-title="Filter past records you want to see: "><span>You can filter out all the records by your specification</span></li>
+            <li data-title="Analyze: "><span>Analyze the distribution of a specific statistic regarding successful applications towards one university</span></li>
+            <li data-title="Predict: "><span>Predict your successful rate of entering a university given your academic background</span></li>
+            <li data-title="Upload: "><span>You can help contribute to our database by uploading your application experience to the website</span></li>
+        </ul>
+    </div>
+
+    <style>
+        body {
+          align-content: center;
+          background-image: url('{{ url_for('static', filename='photo1.png') }}');
+          background-color: rgba(255,255,255,0.8);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-blend-mode: lighten;
+          /* You may add things like width, height, background-size... */
+        }
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 10px;
+        }
+    
+        p {
+          margin-bottom: 20px;
+        }
+    
+        h1, h2 {
+          margin-top: 0;
+          font-weight: bold;
+          text-align: center;
+          color: #333;
+        }
+    
+        h1 {
+          font-size: 36px;
+        }
+    
+        h2 {
+          font-size: 24px;
+        }
+    
+        ul {
+          margin: 40px 0 0 0;
+          list-style: none;
+          padding: 0;
+        }
+    
+        li {
+          margin-bottom: 10px;
+          padding-left: 20px;
+          position: relative;
+          font-size: 18px;
+        }
+    
+        li:before {
+          content: attr(data-title) " ";
+          font-size: 20px;
+          font-weight: bold;
+          color: #666;
+        }
+    
+        li span {
+          font-weight: normal;
+          color: #333;
+        }
+    
+        li::after {
+          content: "\2022";
+          font-size: 20px;
+          color: #0080ff;
+          position: absolute;
+          left: 0;
+          top: 4px;
+        }
+    
+        a {
+          color: #0080ff;
+          text-decoration: none;
+        }
+    
+        a:hover {
+          text-decoration: underline;
+        }
+    </style>
+
+{% endblock %}

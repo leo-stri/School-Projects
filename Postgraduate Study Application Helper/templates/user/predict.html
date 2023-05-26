@@ -1,0 +1,218 @@
+{% extends "Homepage/layout.html" %}
+
+{% block title %}
+    predict: {{ school_name }}
+{% endblock %}
+
+{% block main %}
+
+<style>
+  body {
+  align-content: center;
+  background-image: url('{{ url_for('static', filename='photo1.png') }}');
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: lighten;
+  /* You may add things like width, height, background-size... */
+  }
+
+  .predict-section{
+    margin-top: 30px;
+    margin-left: 30px;
+  }
+
+  form {
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .return {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #333;
+        margin-left: auto;
+        margin-right: 200px;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 8px;
+    margin-bottom: 16px;
+    width: 60%;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+
+  .popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 30%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.popup p {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+.close-btn {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #555;
+}
+  </style>
+      <div class="predict-section">
+      <h2>Success Rate Prediction: {{ school_name }} </h2>
+      <form id="predict-form">
+        <div style="display: flex;">
+          <!-- Left side -->
+          <div style="flex: 1;">
+            <label for="applied_subject">Applied Subject:</label>
+            <select id="applied_subject" name="applied_subject">
+              {% for subject in subjects %}
+              <option value="{{ subject }}">{{ subject }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <label for="gpa">Your GPA:</label>
+            <input type="number" id="gpa" name="gpa" min="0" max="4" step="0.01" required>
+            <br>
+            <label for="current_major">Your current major:</label>
+            <select id="current_major" name="current_major">
+              {% for subject in subjects %}
+              <option value="{{ subject }}">{{ subject }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <label for="is_honor_college">Are you Honor College Student?</label>
+            <select id="is_honor_college" name="is_honor_college">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <br>
+            <label for="gmat">Your GMAT if applicable:</label>
+            <input type="number" id="gmat" name="gmat" min="0" max="800">
+            <br>
+            <label for="gre">Your GRE if applicable:</label>
+            <input type="number" id="gre" name="gre" min="0" max="340">
+          </div>
+          <!-- Right side -->
+          <div style="flex: 1;">
+            <label for="toefl">Your TOFEL if applicable:</label>
+            <input type="number" id="toefl" name="toefl" min="0" max="120">
+            <br>
+            <label for="ielts">Your IELTS if applicable:</label>
+            <input type="number" id="ielts" name="ielts" min="0" max="9" step="0.5">
+            <br>
+            <label for="exempted">English test exempted?</label>
+            <select id="exempted" name="exempted">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <br>
+            <label for="intern">Has internship experience?</label>
+            <select id="intern" name="intern">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <input type="submit" value="Predict Success Rate">
+        <a class='return' href="/university/view/{{ id }}">Return</a>
+      </form>
+    </div>
+
+      <div id="popup-container" class="popup">
+      </div>
+
+      <script>
+      var form = document.getElementById('predict-form');
+      var popupContainer = document.getElementById('popup-container');
+
+      form.addEventListener('submit', function(event) {
+
+      event.preventDefault();
+
+      var formData = new FormData(form);
+      fetch('/university/predict/{{ id }}', {
+      method: 'POST',
+      body: formData
+      })
+      .then(function(response) {
+      return response.json();
+      })
+      .then(function(data) {
+      var popupHtml = '';
+      if (data.output) {
+        popupHtml += '<p>Your chance of successfully applying into (' + data.subject + ') in ' + data.school +
+                    ' is estimated at <strong>' + data.output +'.</strong><br><br>Notice: this estimation only serves as a reference and \
+                    should not determine your result of application in any way.</p>';
+      } else {
+        popupHtml += '<p>Some error happened</p>';
+      }
+      popupHtml += '<button class="close-btn">Close</button>';
+
+      popupContainer.innerHTML = popupHtml;
+      var popup = document.querySelector('.popup');
+      popup.style.display = 'block';
+
+      var closeBtn = document.querySelector('.close-btn');
+      closeBtn.addEventListener('click', function() {
+        popup.style.display = 'none';
+      });
+      });
+      });
+      popupContainer.style.display = 'none';
+    </script>
+
+{% endblock %}
